@@ -371,7 +371,7 @@ export default {
     };
   },
   beforeCreate() {
-    util.setTitle("中秋全家福");
+    util.setTitle("全家福");
     util.gaSendPageView("milk");
   },
   created() {
