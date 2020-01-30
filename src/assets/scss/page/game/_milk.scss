@@ -140,6 +140,22 @@
     z-index: 100;
     background-size: cover;
     background-color: #fff;
+    background-position-y: center;
+}
+.loading-bottom-tip {
+    width: 100%;
+    position: absolute;
+    bottom: 80px;
+}
+.loading-top-tip {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.loading-bottom-tip img {
+    display: block;
+    margin: auto;
+    margin-top: 10px;
 }
 .toStart-btn{
     height: 33px;
@@ -152,10 +168,10 @@
     margin-left: -53px;
     position: absolute;
     bottom: 2rem;
-    color: #9b4b38;
+    color: #474443;
     font-size: 16px;
     font-weight: 500;
-    border: 2px solid #9b4b38;
+    border: 2px solid #474443;
 }
 // 进度条
 .progress{

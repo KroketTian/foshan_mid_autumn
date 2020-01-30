@@ -8,16 +8,17 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta name="author" content="区衍庭">
-  <title>中秋全家福</title>
+  <meta name="author" content="tintin">
+  <title>你宅家的N种姿势</title>
   <style>
 @font-face {
-  font-family: 'iconfont';  /* project id 835326 */
-  src: url('//at.alicdn.com/t/font_835326_7j58uphvw3j.eot');
-  src: url('//at.alicdn.com/t/font_835326_7j58uphvw3j.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_835326_7j58uphvw3j.woff') format('woff'),
-  url('//at.alicdn.com/t/font_835326_7j58uphvw3j.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_835326_7j58uphvw3j.svg#iconfont') format('svg');
+  font-family: 'iconfont';  /* project id 1623324 */
+  src: url('//at.alicdn.com/t/font_1623324_jipj8mdyybo.eot');
+  src: url('//at.alicdn.com/t/font_1623324_jipj8mdyybo.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1623324_jipj8mdyybo.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1623324_jipj8mdyybo.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1623324_jipj8mdyybo.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1623324_jipj8mdyybo.svg#iconfont') format('svg');
 }
 .iconfont{
     font-family:"iconfont" !important;
@@ -41,74 +42,74 @@
   // 注意：所有的JS接口只能在公众号绑定的域名下调用，公众号开发者需要先登录微信公众平台进入“公众号设置”的“功能设置”里填写“JS接口安全域名”。 
   // 如果发现在 Android 不能分享自定义内容，请到官网下载最新的包覆盖安装，Android 自定义分享接口需升级至 6.0.2.58 版本及以上。
   // 完整 JS-SDK 文档地址：http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html
-  wx.config({
-    appId: '<?php echo $signPackage["appId"];?>',
-    timestamp: '<?php echo $signPackage["timestamp"];?>',
-    nonceStr: '<?php echo $signPackage["nonceStr"];?>',
-    signature: '<?php echo $signPackage["signature"];?>',
-    jsApiList: [
-      // 所有要调用的 API 都要加到这个列表中
-       'checkJsApi',
-            'onMenuShareTimeline',
-            'onMenuShareAppMessage',
-            'onMenuShareQQ',
-            'onMenuShareWeibo',
-            'hideMenuItems',
-            'showMenuItems',
-            'hideAllNonBaseMenuItem',
-            'showAllNonBaseMenuItem',
-            'translateVoice',
-            'startRecord',
-            'stopRecord',
-            'onRecordEnd',
-            'playVoice',
-            'pauseVoice',
-            'stopVoice',
-            'uploadVoice',
-            'downloadVoice',
-            'chooseImage',
-            'previewImage',
-            'uploadImage',
-            'downloadImage',
-            'getNetworkType',
-            'openLocation',
-            'getLocation',
-            'hideOptionMenu',
-            'showOptionMenu',
-            'closeWindow',
-            'scanQRCode',
-            'chooseWXPay',
-            'openProductSpecificView',
-            'addCard',
-            'chooseCard',
-            'openCard'
-    ]
-  });
+  // wx.config({
+  //   appId: '<?php echo $signPackage["appId"];?>',
+  //   timestamp: '<?php echo $signPackage["timestamp"];?>',
+  //   nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+  //   signature: '<?php echo $signPackage["signature"];?>',
+  //   jsApiList: [
+  //     // 所有要调用的 API 都要加到这个列表中
+  //      'checkJsApi',
+  //           'onMenuShareTimeline',
+  //           'onMenuShareAppMessage',
+  //           'onMenuShareQQ',
+  //           'onMenuShareWeibo',
+  //           'hideMenuItems',
+  //           'showMenuItems',
+  //           'hideAllNonBaseMenuItem',
+  //           'showAllNonBaseMenuItem',
+  //           'translateVoice',
+  //           'startRecord',
+  //           'stopRecord',
+  //           'onRecordEnd',
+  //           'playVoice',
+  //           'pauseVoice',
+  //           'stopVoice',
+  //           'uploadVoice',
+  //           'downloadVoice',
+  //           'chooseImage',
+  //           'previewImage',
+  //           'uploadImage',
+  //           'downloadImage',
+  //           'getNetworkType',
+  //           'openLocation',
+  //           'getLocation',
+  //           'hideOptionMenu',
+  //           'showOptionMenu',
+  //           'closeWindow',
+  //           'scanQRCode',
+  //           'chooseWXPay',
+  //           'openProductSpecificView',
+  //           'addCard',
+  //           'chooseCard',
+  //           'openCard'
+  //   ]
+  // });
 
-    /**
-     * 分享功能自定义
-     */
-    wx.ready(function() {
-        var share_content = {
-            title: '中秋节全家福',
-            desc: '中秋夜，粤团圆。2018，定制你的中秋夜！',
-            link: 'http://poster.fsonline.com.cn/foshan_mid_autumn/dist/index.php',
-            imgUrl: 'http://poster.fsonline.com.cn/foshan_mid_autumn/dist/static/img/share1.jpg',
-            success: function (res) {
-               // alert("分享成功：");
-                // 用户确认分享后执行的回调函数
-            },
-            cancel: function (res) {
-               // alert("取消分享：");
-                // 用户取消分享后执行的回调函数
-            }
-        };
-        wx.onMenuShareAppMessage(share_content);
-        wx.onMenuShareQQ(share_content);
-        wx.onMenuShareQZone(share_content);
-        wx.onMenuShareTimeline(share_content);
-        wx.onMenuShareWeibo(share_content);
-    });
+  //   /**
+  //    * 分享功能自定义
+  //    */
+  //   wx.ready(function() {
+  //       var share_content = {
+  //           title: '中秋节全家福',
+  //           desc: '中秋夜，粤团圆。2018，定制你的中秋夜！',
+  //           link: 'http://poster.fsonline.com.cn/foshan_mid_autumn/dist/index.php',
+  //           imgUrl: 'http://poster.fsonline.com.cn/foshan_mid_autumn/dist/static/img/share1.jpg',
+  //           success: function (res) {
+  //              // alert("分享成功：");
+  //               // 用户确认分享后执行的回调函数
+  //           },
+  //           cancel: function (res) {
+  //              // alert("取消分享：");
+  //               // 用户取消分享后执行的回调函数
+  //           }
+  //       };
+  //       wx.onMenuShareAppMessage(share_content);
+  //       wx.onMenuShareQQ(share_content);
+  //       wx.onMenuShareQZone(share_content);
+  //       wx.onMenuShareTimeline(share_content);
+  //       wx.onMenuShareWeibo(share_content);
+  //   });
 </script>
 </body>
 </html>

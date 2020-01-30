@@ -74,7 +74,6 @@ import util from "../../assets/js/util";
 import helper from "../../assets/js/helper";
 import constant from "../../assets/js/constant";
 import hidpi from "../../assets/js/hidpi-canvas.min";
-
 export default {
   name: "milk",
   data() {
@@ -102,6 +101,7 @@ export default {
       ],
       // 装饰元素类别
       thingsTypeList: [
+        { name: "other", id: 3 ,url:require('../../assets/img/icons2.png') ,bgSize:'0% 0%'},
         { name: "fur", id: 1 ,url:require('../../assets/img/icons.png') ,bgSize:'0% 89%'},
         { name: "pet", id: 2 ,url:require('../../assets/img/icons.png') ,bgSize:'0% 26%'},
         { name: "per", id: 0 ,url:require('../../assets/img/icons.png') ,bgSize:'0% 81%'}, 
@@ -111,9 +111,10 @@ export default {
         // 背景
         [
           require("../../assets/img/bg1.jpg"),
+          require("../../assets/img/bg5.jpg"),
           require("../../assets/img/bg22.jpg"),
-          require("../../assets/img/bg3.jpg"),
-          require("../../assets/img/bg4.jpg"),
+          // require("../../assets/img/bg3.jpg"),
+          // require("../../assets/img/bg4.jpg"),
         ],
         // 人物
         [
@@ -132,10 +133,9 @@ export default {
           require("../../assets/img/fur1.png"),
           require("../../assets/img/fur2.png"),
           require("../../assets/img/fur3.png"),
+          require("../../assets/img/fur20.png"),
           require("../../assets/img/fur4.png"),
-          require("../../assets/img/fur5.png"),
-          require("../../assets/img/fur6.png"),
-          require("../../assets/img/fur7.png"),
+          require("../../assets/img/fur23.png"),
           require("../../assets/img/fur8.png"),
           require("../../assets/img/fur9.png"),
           require("../../assets/img/fur10.png"),
@@ -147,9 +147,12 @@ export default {
           require("../../assets/img/fur16.png"),
           require("../../assets/img/fur17.png"),
           require("../../assets/img/fur18.png"),
-          require("../../assets/img/fur20.png"),
           require("../../assets/img/fur21.png"),
           require("../../assets/img/fur22.png"),
+          require("../../assets/img/fur24.png"),
+          require("../../assets/img/fur5.png"),
+          require("../../assets/img/fur6.png"),
+          require("../../assets/img/fur7.png"),
         ],
         // 宠物
         [
@@ -166,6 +169,10 @@ export default {
           require("../../assets/img/dog4.png"),
           require("../../assets/img/dog5.png"),
           require("../../assets/img/dog6.png"),
+        ],
+        // 其他
+        [
+          require("../../assets/img/other1.png"),
         ],
          //头发(男)
         [
@@ -281,18 +288,25 @@ export default {
       ],
       // 文字列表，用Unicode编码
       textList: [
-        '&#xe636;',
-        '&#xe635;',
-        '&#xe634;',
-        '&#xe633;',
-        // '&#xe632;',
-        '&#xe631;',
-        '&#xe630;',
-        '&#xe62f;',
-        '&#xe62e;',
-        '&#xe62d;',
-        '&#xe638;',
-        '&#xe637;',
+        '&#xe65e;',
+        '&#xe65d;',
+        '&#xe65c;',
+        '&#xe65b;',
+        '&#xe65a;',
+        '&#xe659;',
+        '&#xe658;',
+        '&#xe657;',
+        '&#xe656;',
+        '&#xe655;',
+        '&#xe654;',
+        '&#xe653;',
+        '&#xe652;',
+        '&#xe651;',
+        '&#xe650;',
+        '&#xe64f;',
+        '&#xe64e;',
+        '&#xe64d;',
+
       ],
       // 文字可选的颜色
       textColorList: [
@@ -379,6 +393,9 @@ export default {
     },
     convertSrc(src){
       let basePath = window.location.href;
+      if(!src){
+          return '';
+      }
       return basePath.indexOf('8081')>=0 ? (src.split('8081')[src.split('8081').length-1]) : ((src.split('/dist').length>1?'.':'') + src.split('/dist')[src.split('/dist').length-1]);
     },
     setImg(ev) {
@@ -400,11 +417,9 @@ export default {
         this.setCanvas(true);
         return;
       }
-
       this.canElList.push({ e: oImg, x: 100, y: 100, w: oImgDetail.width, h: oImgDetail.height });
       this.active = this.canElList[this.canElList.length - 1];
       this.active.i = this.canElList.length - 1;
-
       // 如果选中的是主角
       let src = this.convertSrc(oImg.src);
       if(index >= this.materialList[0].length && index < this.materialList[0].length + this.materialList[1].length){
@@ -424,7 +439,6 @@ export default {
           // 设置默认衣服
           this.changeCharacterType(3,'man');
           this.setCharacterImg({target:{src: this.materialList[this.typeList.length + this.thingsTypeList.length - 2 + 3][1] }})
-
           this.changeCharacterType(0,'man');
         }
         // 如果选中的是女的(假设第二个是女的)
@@ -442,11 +456,9 @@ export default {
           // 设置默认衣服
           this.changeCharacterType(2,'woman');
           this.setCharacterImg({target:{src: this.materialList[this.typeList.length + this.thingsTypeList.length + this.characterManTypeList.length - 2 + 2][1] }})
-
           this.changeCharacterType(0,'woman');
         }
       }
-
       this.setCanvas(true);
     },
     setCharacterImg(ev){
@@ -481,7 +493,6 @@ export default {
         this.setCanvas();
         return;
       }
-
       this.active = {};
       // 设置大小按钮
       let s = this.resetEl;
@@ -513,7 +524,6 @@ export default {
       for(let i = this.canElList.length - 1 , len = this.canElList.length ; i >= 0 ; i--){
         let temp = this.canElList[i];
         if(x < temp.x || x > temp.x + temp.w || y < temp.y || y > temp.y + temp.h){ continue; }
-
         // 如果选中的是主角
         if(this.canElList[i].e.src && this.canElList[i].perType){
           this.changeType(1,false);
@@ -537,7 +547,6 @@ export default {
         let _temp = this.canElList.splice(i, 1);
         this.canElList.push(_temp[0]);
         this.canElList[this.canElList.length-1].perType? this.active.perType = this.canElList[this.canElList.length-1].perType : '';
-
         return;
       }
       this.setCanvas();
@@ -547,7 +556,6 @@ export default {
         this.setSizse(ev);
         return;
       }
-
       let a = this.active;
       if(!a.e){ return; }
       let x = ev.changedTouches[0].clientX;
@@ -569,7 +577,6 @@ export default {
           }
         }
       }
-
       this.active.x = x;
       this.active.y = y;
       this.setCanvas(true);
@@ -608,15 +615,15 @@ export default {
     end(ev) {
       let a = this.active;
       if(!a.e){ return; }
-      // 如果是这是颜色
-      if(a.color){
-        this.setCanvas(true);
-        return;
-      }
       // 如果是设置了大小
       if(this.isReseting){
         this.setSizse(ev);
         // this.active = {};
+        return;
+      }
+      // 如果是这是颜色
+      if(a.color){
+        this.setCanvas(true);
         return;
       }
       let x = ev.changedTouches[0].clientX;
@@ -640,7 +647,6 @@ export default {
       }
       this.active.x = dX;
       this.active.y = dY;
-
       this.setCanvas(true);
       // this.active = {};
       
@@ -665,7 +671,6 @@ export default {
     },
     saveCanvas() {
       this.setCanvas();
-
       let imgSrc = this.canvas.toDataURL("image/jpeg", 1);
       this.imgSrc = imgSrc;
       weui.toast("长按保存", 1000);
@@ -770,7 +775,6 @@ export default {
       _context.width = _context.clientWidth;
       _context.height = _context.clientHeight;
       let _ctx = that.ctx = _context.getContext("2d");
-
       // polyfill 提供了这个方法用来获取设备的 pixel ratio
       let getPixelRatio = function(context) {
         let backingStore = context.backingStorePixelRatio ||
@@ -782,7 +786,6 @@ export default {
         return (window.devicePixelRatio || 1) / backingStore;
       };
       this.ratio = getPixelRatio(that.ctx);
-
       that.ctx.save();
     },
     changeType(id = 0,isSetShowSel = true) {
@@ -815,7 +818,6 @@ export default {
       var standardWidth = 1080;
       var totalWidth = document.body.scrollWidth;
       var scale = totalWidth / standardWidth;
-
       let arr = this.materialList;
       let _arr = [];
       let __arr = [];
@@ -849,7 +851,6 @@ export default {
           _arr.push(newImage);
         }
       }
-
       this.imgList = _arr;
       this.imgListArr = __arr;
       this.imgListDetailArr = materialListDetail;
