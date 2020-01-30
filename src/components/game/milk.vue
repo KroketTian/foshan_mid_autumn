@@ -9,7 +9,15 @@
           </span>
         </div>
       </div>
-      <button v-if="isReady === 'allReady'"  @click="toStart" class="toStart-btn">定制全家福</button>
+      <div class="loading-top-tip">
+        <img src="../../assets/img/index_top_logo.png" style="width:86px"/>
+      </div>
+      <div class="loading-bottom-tip">
+        <p>点击下方按钮<br/>定制属于你的宅家姿势</p>
+        <!-- <img src="../../assets/img/index_bottom_tip.png" style="width:200px"/> -->
+        <img src="../../assets/img/index_bottom_icon.png"  style="width:20px"/>
+      </div>
+      <button v-if="isReady === 'allReady'"  @click="toStart" class="toStart-btn">开始DIY</button>
     </div>
     <canvas v-if="isStart" class="top" @touchstart="start" @touchmove.prevent="move" @touchend="end"></canvas>
     <img v-if="isSaved && isStart" :src="imgSrc">
