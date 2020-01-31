@@ -300,3 +300,19 @@
 #milk .bottom .selList li i {
     font-size: 5rem;
 }
+.save-btn-tip {
+    font-size: 12px;
+    margin-top: -6px;
+}
+.save-tip {
+    position: absolute;
+    bottom: 100px;
+    margin: auto;
+    display: block;
+    left: 50%;
+    width: 150px;
+    font-size: 20px;
+    font-weight: 900;
+    text-align: center;
+    margin-left: -75px;
+}

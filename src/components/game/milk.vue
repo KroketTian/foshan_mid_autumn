@@ -70,8 +70,10 @@
     </div>
     <button class="clear-btn" v-if="!isSaved" @click="isClearCanvas"><img :src="require('../../assets/img/clear_icon.png')"/></button>
     <button class="back-btn" v-if="isSaved" @click="backToEdit">返回</button>
+    <p class="save-tip" v-if="isSaved">长按图片保存</p>
     <div class="bottom-back" v-if="!isSaved">
       <button class="save-btn" v-bind:style="{'background-image':'url('+require('../../assets/img/icons.png')+')'}" @click="saveCanvas"></button>
+      <p class="save-btn-tip">点击上方按钮生成海报</p>
     </div>
   </div>
 </template>
@@ -158,6 +160,7 @@ export default {
           require("../../assets/img/fur21.png"),
           require("../../assets/img/fur22.png"),
           require("../../assets/img/fur24.png"),
+          require("../../assets/img/fur25.png"),
           require("../../assets/img/fur5.png"),
           require("../../assets/img/fur6.png"),
           require("../../assets/img/fur7.png"),
@@ -240,6 +243,7 @@ export default {
           require("../../assets/img/man_body_6.png"),
           require("../../assets/img/man_body_7.png"),
           require("../../assets/img/man_body_8.png"),
+          require("../../assets/img/man_body_9.png"),
         ],
          //头发(女)
         [
@@ -285,6 +289,7 @@ export default {
           require("../../assets/img/woman_body_7.png"),
           require("../../assets/img/woman_body_8.png"),
           require("../../assets/img/woman_body_9.png"),
+          require("../../assets/img/man_body_9.png"),
         ],
         // 人物
         [
@@ -328,6 +333,7 @@ export default {
       characterDecorateList: [],//显示的可选的主角装饰
       // 保存图片路径
       imgList: [],
+      headImgEle:null,//头像元素
       // 保存图片实例
       imgListArr: [],
       // 保存图片信息
@@ -684,6 +690,17 @@ export default {
       weui.toast("长按保存", 1000);
       this.isSaved = true;
     },
+    getDataFromUrl(name){
+      let url = window.location.href;
+      let strList = url.split('?')[1].split('&');
+      for(let i = 0 ; i < strList.length ; i++){
+        var thisName = strList[i].split('=')[0];
+        if(thisName == name){
+          return strList[i].split('=')[1]
+        }
+      }
+      return ''
+    },
     backToEdit(){
       this.isSaved = false;
     },
@@ -726,19 +743,19 @@ export default {
         let t = this.delEl = {
           t: this.imgList[this.imgList.length - 2],
           i: a.i,
-          x: el.x - 15,
-          y: el.y + el.h -5,
-          w: 20,
-          h: 20
+          x: el.x - 20,
+          y: el.y + el.h -10,
+          w: 30,
+          h: 30
         };
         // 修改大小的按钮
         let s = this.resetEl = {
           t: this.imgList[this.imgList.length - 1],
           i: a.i,
-          x: el.x + el.w - 5,
-          y: el.y -15,
-          w: 20,
-          h: 20
+          x: el.x + el.w - 10,
+          y: el.y -20,
+          w: 30,
+          h: 30
         };
         // 设置颜色按钮
         this.setCol = [];
@@ -776,6 +793,30 @@ export default {
       let bottomW = this.canvas.width;
       let bottomH = 100/16*this.baseFontSize*this.ratio;
       this.ctx.drawImage(bottomTemp, bottomX, bottomY, bottomW, bottomH);
+      // 昵称
+      let nickName = decodeURIComponent(decodeURIComponent(this.getDataFromUrl('name')))
+      console.log(nickName)
+      // let nickNameX = 50;
+      let nickNameX = this.canvas.width * 0.15;
+      let nickNameY = this.canvas.height - 100/16*this.baseFontSize*this.ratio*0.73;
+      this.ctx.fillStyle = '#333';
+      this.ctx.font =this.canvas.width * 0.04/ this.ratio + 'px' + ' Georgia';
+      // this.ctx.font =this.canvas.width * 0.04 + 'px' + ' Georgia';
+      this.ctx.fillText('我是'+nickName+'，我为国家而宅',nickNameX/ this.ratio,nickNameY/ this.ratio);
+      // 底部头像
+      let headUrl = decodeURIComponent(decodeURIComponent(this.getDataFromUrl('headimg')));
+      let headX = this.canvas.width * 0.03;
+      let headY = this.canvas.height - 100/16*this.baseFontSize*this.ratio*0.95;
+      let headW = this.canvas.width * 0.09;
+      let headH = this.canvas.width * 0.09;
+      console.log(this.canvas.width,this.ratio,this.baseFontSize)
+      this.ctx.save();
+      this.ctx.beginPath();
+      this.ctx.arc((headX+headW/2) / this.ratio, (headY + headW/2) / this.ratio, headW/2 / this.ratio, 0, Math.PI * 2, false);
+      this.ctx.closePath();
+      this.ctx.clip(); //剪切路径
+      this.ctx.drawImage(this.headImgEle, headX, headY, headW, headH);
+      this.ctx.restore();
     },
     getCanvas() {
       const that = this;
@@ -873,6 +914,16 @@ export default {
           return;
         }
       }, 50);
+      // 预加载头像
+      let headUrl = decodeURIComponent(decodeURIComponent(this.getDataFromUrl('headimg')));
+      let headImage = new Image();
+      headImage.crossOrigin = "anonymous";
+      headImage.onload = () => { 
+        // this.headImgEle = headImage
+      }
+      headImage.src = headUrl;
+      headImage.dataSrc = headUrl;
+      this.headImgEle = headImage
     },
     checkEl() {
       console.log('checkEl-star');
